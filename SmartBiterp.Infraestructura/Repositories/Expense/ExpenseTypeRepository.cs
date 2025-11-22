@@ -37,5 +37,10 @@ namespace SmartBiterp.Infrastructure.Repositories.Expense
             int count = await _context.ExpenseTypes.CountAsync();
             return $"EX{(count + 1).ToString("0000")}";
         }
+
+        public void Remove(ExpenseType entity)
+        {
+            _context.ExpenseTypes.Remove(entity);
+        }
     }
 }

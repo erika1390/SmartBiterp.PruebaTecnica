@@ -7,8 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\" />
-    <Folder Include="Services\" />
     <Folder Include="Validators\System\" />
     <Folder Include="Validators\Security\" />
   </ItemGroup>

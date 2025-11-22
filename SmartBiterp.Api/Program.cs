@@ -1,19 +1,88 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi;
+using Microsoft.OpenApi.Models;
+
+using SmartBiterp.Application.Interfaces.Expense;
+using SmartBiterp.Application.Mapping;
+using SmartBiterp.Application.Services.Expense;
+
+using SmartBiterp.Domain.Interfaces;
+using SmartBiterp.Domain.Interfaces.Expense;
+using SmartBiterp.Domain.Interfaces.Security;
+using SmartBiterp.Domain.Interfaces.System;
 
 using SmartBiterp.Infrastructure.Persistence.Context;
+using SmartBiterp.Infrastructure.Repositories.Expense;
+using SmartBiterp.Infrastructure.Repositories.Security;
+using SmartBiterp.Infrastructure.Repositories.System;
+using SmartBiterp.Infrastructure.UnitOfWork;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Controllers
 builder.Services.AddControllers();
-builder.Services.AddOpenApi();
+
+// Swagger
+builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "SmartBiterp API",
+        Version = "v1"
+    });
+});
+
+// Database
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// AutoMapper
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.AddProfile<ExpenseMappingProfile>();
+    cfg.AddProfile<SecurityMappingProfile>();
+    cfg.AddProfile<SystemMappingProfile>();
+});
+
+// Services
+builder.Services.AddScoped<IExpenseTypeService, ExpenseTypeService>();
+
+// Expense Repositories
+builder.Services.AddScoped<IExpenseTypeRepository, ExpenseTypeRepository>();
+builder.Services.AddScoped<IMoneyFundRepository, MoneyFundRepository>();
+builder.Services.AddScoped<IBudgetRepository, BudgetRepository>();
+builder.Services.AddScoped<IExpenseRepository, ExpenseRepository>();
+builder.Services.AddScoped<IDepositRepository, DepositRepository>();
+builder.Services.AddScoped<IReportRepository, ReportRepository>();
+
+// Security Repositories
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
+builder.Services.AddScoped<IRolePermissionRepository, RolePermissionRepository>();
+builder.Services.AddScoped<IMenuRepository, MenuRepository>();
+builder.Services.AddScoped<IMenuRoleRepository, MenuRoleRepository>();
+
+// System Repositories
+builder.Services.AddScoped<IAuditLogRepository, AuditLogRepository>();
+
+// UoW
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 var app = builder.Build();
+
+// Enable Swagger in Development
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "SmartBiterp API v1");
+    });
 }
+
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();

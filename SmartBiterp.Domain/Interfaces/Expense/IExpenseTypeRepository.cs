@@ -8,5 +8,6 @@ namespace SmartBiterp.Domain.Interfaces.Expense
         Task<ExpenseType?> GetByIdAsync(int id);
         Task AddAsync(ExpenseType entity);
         Task<string> GetNextCodeAsync();
+        void Remove(ExpenseType entity);
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-using SmartBiterp.Domain.Interfaces.System;
+using SmartBiterp.Domain.Interfaces;
 using SmartBiterp.Infrastructure.Persistence.Context;
 
 namespace SmartBiterp.Infrastructure.UnitOfWork

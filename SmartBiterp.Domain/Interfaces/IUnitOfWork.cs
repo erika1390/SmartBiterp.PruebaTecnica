@@ -1,7 +1,8 @@
 ﻿using SmartBiterp.Domain.Interfaces.Expense;
 using SmartBiterp.Domain.Interfaces.Security;
+using SmartBiterp.Domain.Interfaces.System;
 
-namespace SmartBiterp.Domain.Interfaces.System
+namespace SmartBiterp.Domain.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
