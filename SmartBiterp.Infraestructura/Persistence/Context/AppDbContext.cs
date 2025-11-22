@@ -3,11 +3,13 @@
 using SmartBiterp.Domain.Entities.Expense;
 using SmartBiterp.Domain.Entities.Security;
 using SmartBiterp.Domain.Entities.System;
+using SmartBiterp.Domain.Enums;
 
 namespace SmartBiterp.Infrastructure.Persistence.Context
 {
     public class AppDbContext : DbContext
     {
+        public static readonly DateTime StaticCreatedAt = new DateTime(2025, 7, 28, 0, 0, 0, DateTimeKind.Utc);
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
@@ -26,11 +28,27 @@ namespace SmartBiterp.Infrastructure.Persistence.Context
         public DbSet<RolePermission> RolePermissions => Set<RolePermission>();
         public DbSet<MenuRole> MenuRoles => Set<MenuRole>();
         public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Apply all configurations from Configurations folder
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
             base.OnModelCreating(modelBuilder);
+            #region Permission
+            modelBuilder.Entity<ExpenseType>().HasData(
+                new ExpenseType
+                {
+
+                    Id = 1,
+                    Code = "ET001",
+                    Description = "Food & Groceries",
+                    Category = ExpenseCategoryType.Other,
+                    CreatedAt = StaticCreatedAt,
+                    UpdatedAt = null
+                }
+            );
+            #endregion Permission
         }
     }
 }
