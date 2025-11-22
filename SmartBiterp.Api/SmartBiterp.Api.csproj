@@ -25,6 +25,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SmartBiterp.Application\SmartBiterp.Application.csproj" />
     <ProjectReference Include="..\SmartBiterp.Infraestructura\SmartBiterp.Infrastructure.csproj" />
+    <ProjectReference Include="..\SmartBiterp.Shared\SmartBiterp.Shared.csproj" />
   </ItemGroup>
 
 </Project>

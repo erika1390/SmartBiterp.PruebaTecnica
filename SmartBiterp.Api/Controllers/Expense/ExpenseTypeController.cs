@@ -2,6 +2,7 @@
 
 using SmartBiterp.Application.DTOs.Expense;
 using SmartBiterp.Application.Interfaces.Expense;
+using SmartBiterp.Shared.Common.Responses;
 
 namespace SmartBiterp.Api.Controllers
 {
@@ -20,7 +21,7 @@ namespace SmartBiterp.Api.Controllers
         public async Task<IActionResult> GetAll()
         {
             var result = await _service.GetAllAsync();
-            return Ok(result);
+            return Ok(ApiResponse<IEnumerable<ExpenseTypeDto>>.Ok(result));
         }
 
         [HttpGet("{id:int}")]
@@ -29,40 +30,45 @@ namespace SmartBiterp.Api.Controllers
             var result = await _service.GetByIdAsync(id);
 
             if (result == null)
-                return NotFound($"Expense type with ID {id} not found.");
+                return NotFound(ApiResponse<string>.Fail($"Expense type with ID {id} not found."));
 
-            return Ok(result);
+            return Ok(ApiResponse<ExpenseTypeDto>.Ok(result));
         }
 
         [HttpGet("next-code")]
         public async Task<IActionResult> GetNextCode()
         {
             var code = await _service.GetNextCodeAsync();
-            return Ok(new { nextCode = code });
+            return Ok(ApiResponse<object>.Ok(new { nextCode = code }));
         }
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateExpenseTypeRequest request)
         {
             var id = await _service.CreateAsync(request);
-            return CreatedAtAction(nameof(GetById), new { id = id }, null);
+
+            return CreatedAtAction(
+                nameof(GetById),
+                new { id = id },
+                ApiResponse<object>.Ok(new { id })
+            );
         }
 
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Update(int id, [FromBody] UpdateExpenseTypeRequest request)
         {
             if (id != request.Id)
-                return BadRequest("The id in the URL does not match the request body.");
+                return BadRequest(ApiResponse<string>.Fail("The id in the URL does not match the request body."));
 
             await _service.UpdateAsync(request);
-            return NoContent();
+            return Ok(ApiResponse<string>.Ok("Expense type updated successfully."));
         }
 
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
             await _service.DeleteAsync(id);
-            return NoContent();
+            return Ok(ApiResponse<string>.Ok("Expense type deleted successfully."));
         }
     }
 }
