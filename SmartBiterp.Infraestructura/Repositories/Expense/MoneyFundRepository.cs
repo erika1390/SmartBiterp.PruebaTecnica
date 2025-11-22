@@ -16,12 +16,20 @@ namespace SmartBiterp.Infrastructure.Repositories.Expense
         }
 
         public async Task<IEnumerable<MoneyFund>> GetAllAsync()
-            => await _context.MoneyFunds.ToListAsync();
+        {
+            return await _context.MoneyFunds
+                .OrderBy(f => f.Name)
+                .ToListAsync();
+        }
 
         public async Task<MoneyFund?> GetByIdAsync(int id)
-            => await _context.MoneyFunds.FindAsync(id);
+        {
+            return await _context.MoneyFunds.FindAsync(id);
+        }
 
         public async Task AddAsync(MoneyFund entity)
-            => await _context.MoneyFunds.AddAsync(entity);
+        {
+            await _context.MoneyFunds.AddAsync(entity);
+        }
     }
 }

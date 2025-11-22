@@ -16,7 +16,19 @@ namespace SmartBiterp.Infrastructure.Repositories.Expense
         }
 
         public async Task AddAsync(Budget entity)
-            => await _context.Budgets.AddAsync(entity);
+        {
+            bool exists = await _context.Budgets
+                .AnyAsync(b =>
+                    b.ExpenseTypeId == entity.ExpenseTypeId &&
+                    b.Month == entity.Month &&
+                    b.Year == entity.Year
+                );
+
+            if (exists)
+                throw new InvalidOperationException("A budget already exists for this type, month and year.");
+
+            await _context.Budgets.AddAsync(entity);
+        }
 
         public async Task<Budget?> GetBudgetAsync(int expenseTypeId, int month, int year)
         {

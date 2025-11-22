@@ -16,13 +16,21 @@ namespace SmartBiterp.Infrastructure.Repositories.Expense
         }
 
         public async Task<IEnumerable<ExpenseType>> GetAllAsync()
-            => await _context.ExpenseTypes.ToListAsync();
+        {
+            return await _context.ExpenseTypes
+                .OrderBy(x => x.Description)
+                .ToListAsync();
+        }
 
         public async Task<ExpenseType?> GetByIdAsync(int id)
-            => await _context.ExpenseTypes.FindAsync(id);
+        {
+            return await _context.ExpenseTypes.FindAsync(id);
+        }
 
         public async Task AddAsync(ExpenseType entity)
-            => await _context.ExpenseTypes.AddAsync(entity);
+        {
+            await _context.ExpenseTypes.AddAsync(entity);
+        }
 
         public async Task<string> GetNextCodeAsync()
         {

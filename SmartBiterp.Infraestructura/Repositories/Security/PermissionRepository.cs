@@ -1,4 +1,6 @@
-﻿using SmartBiterp.Domain.Entities.Security;
+﻿using Microsoft.EntityFrameworkCore;
+
+using SmartBiterp.Domain.Entities.Security;
 using SmartBiterp.Domain.Interfaces.Security;
 using SmartBiterp.Infrastructure.Persistence.Context;
 
@@ -14,17 +16,33 @@ namespace SmartBiterp.Infrastructure.Repositories.Security
         }
         public async Task AddAsync(Permission permission)
         {
-            throw new NotImplementedException();
+            permission.Code = permission.Code.Trim();
+            permission.Description = permission.Description.Trim();
+
+            bool exists = await _context.Permissions
+                .AnyAsync(p => p.Code.ToLower() == permission.Code.ToLower());
+
+            if (exists)
+                throw new InvalidOperationException($"A permission with code '{permission.Code}' already exists.");
+
+            await _context.Permissions.AddAsync(permission);
         }
 
         public async Task<IEnumerable<Permission>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Permissions
+                .Include(p => p.RolePermissions)
+                    .ThenInclude(rp => rp.Role)
+                .OrderBy(p => p.Code)
+                .ToListAsync();
         }
 
         public async Task<Permission?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Permissions
+                .Include(p => p.RolePermissions)
+                    .ThenInclude(rp => rp.Role)
+                .FirstOrDefaultAsync(p => p.Id == id);
         }
     }
 }

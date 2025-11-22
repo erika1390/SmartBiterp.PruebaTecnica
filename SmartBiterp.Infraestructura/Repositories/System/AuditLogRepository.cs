@@ -14,7 +14,18 @@ namespace SmartBiterp.Infrastructure.Repositories.System
         }
         public async Task AddAsync(AuditLog log)
         {
-            throw new NotImplementedException();
+            log.User = log.User?.Trim() ?? string.Empty;
+            log.Entity = log.Entity?.Trim() ?? string.Empty;
+            log.RecordId = log.RecordId?.Trim() ?? string.Empty;
+            log.Detail = log.Detail?.Trim() ?? string.Empty;
+
+            if (string.IsNullOrWhiteSpace(log.User))
+                throw new ArgumentException("AuditLog requires a valid User.");
+
+            if (string.IsNullOrWhiteSpace(log.Entity))
+                throw new ArgumentException("AuditLog requires a valid Entity name.");
+
+            await _context.AuditLogs.AddAsync(log);
         }
     }
 }

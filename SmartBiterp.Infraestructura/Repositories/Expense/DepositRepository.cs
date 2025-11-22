@@ -16,7 +16,12 @@ namespace SmartBiterp.Infrastructure.Repositories.Expense
         }
 
         public async Task AddAsync(Deposit entity)
-            => await _context.Deposits.AddAsync(entity);
+        {
+            if (entity.Amount <= 0)
+                throw new ArgumentException("Deposit amount must be greater than zero.");
+
+            await _context.Deposits.AddAsync(entity);
+        }
 
         public async Task<IEnumerable<Deposit>> GetByDateRangeAsync(DateTime start, DateTime end)
         {
