@@ -23,10 +23,13 @@ namespace SmartBiterp.Application.Services.Expense
         {
             var nextCode = await _uow.ExpenseTypes.GetNextCodeAsync();
 
+            if (!Enum.TryParse<ExpenseCategoryType>(request.Category, true, out var category))
+                throw new ArgumentException($"Category '{request.Category}' is not valid.");
+
             var entity = new ExpenseType
             {
                 Description = request.Description,
-                Category = Enum.Parse<ExpenseCategoryType>(request.Category),
+                Category = category,
                 Code = nextCode
             };
 
