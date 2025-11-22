@@ -42,16 +42,13 @@ namespace SmartBiterp.Infrastructure.Repositories.Expense
             if (string.IsNullOrEmpty(lastCode))
                 return "EX0001";
 
-            // Extraer la parte numérica del código
-            var numberPart = lastCode.Substring(2); // "0004"
+            var numberPart = lastCode.Substring(2);
 
             if (int.TryParse(numberPart, out int number))
             {
                 number++;
                 return $"EX{number:0000}";
             }
-
-            // En caso de error inesperado
             return "EX0001";
         }
 

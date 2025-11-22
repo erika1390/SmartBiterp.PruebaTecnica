@@ -31,5 +31,30 @@ namespace SmartBiterp.Infrastructure.Repositories.Expense
         {
             await _context.MoneyFunds.AddAsync(entity);
         }
+
+        public async Task<string> GetNextCodeAsync()
+        {
+            var lastCode = await _context.MoneyFunds
+                .OrderByDescending(x => x.Id)
+                .Select(x => x.Code)
+                .FirstOrDefaultAsync();
+
+            if (string.IsNullOrEmpty(lastCode))
+                return "MF0001";
+
+            var numberPart = lastCode.Substring(2);
+
+            if (int.TryParse(numberPart, out int number))
+            {
+                number++;
+                return $"MF{number:0000}";
+            }
+            return "MF0001";
+        }
+
+        public void Remove(MoneyFund entity)
+        {
+            _context.MoneyFunds.Remove(entity);
+        }
     }
 }
