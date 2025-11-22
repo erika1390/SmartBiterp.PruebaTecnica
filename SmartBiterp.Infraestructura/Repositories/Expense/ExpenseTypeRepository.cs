@@ -34,9 +34,27 @@ namespace SmartBiterp.Infrastructure.Repositories.Expense
 
         public async Task<string> GetNextCodeAsync()
         {
-            int count = await _context.ExpenseTypes.CountAsync();
-            return $"EX{(count + 1).ToString("0000")}";
+            var lastCode = await _context.ExpenseTypes
+                .OrderByDescending(x => x.Id)
+                .Select(x => x.Code)
+                .FirstOrDefaultAsync();
+
+            if (string.IsNullOrEmpty(lastCode))
+                return "EX0001";
+
+            // Extraer la parte numérica del código
+            var numberPart = lastCode.Substring(2); // "0004"
+
+            if (int.TryParse(numberPart, out int number))
+            {
+                number++;
+                return $"EX{number:0000}";
+            }
+
+            // En caso de error inesperado
+            return "EX0001";
         }
+
 
         public void Remove(ExpenseType entity)
         {
