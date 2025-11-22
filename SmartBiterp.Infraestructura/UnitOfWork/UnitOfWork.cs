@@ -52,7 +52,7 @@ namespace SmartBiterp.Infrastructure.UnitOfWork
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _context.Dispose();
         }
 
         public async Task<int> SaveChangesAsync()
