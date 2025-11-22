@@ -2,6 +2,7 @@
 
 using SmartBiterp.Application.DTOs.Expense;
 using SmartBiterp.Domain.Entities.Expense;
+using SmartBiterp.Domain.Enums;
 
 namespace SmartBiterp.Application.Mapping
 {
@@ -27,6 +28,9 @@ namespace SmartBiterp.Application.Mapping
 
             CreateMap<Deposit, DepositDto>()
                 .ForMember(d => d.MoneyFundName, opt => opt.MapFrom(s => s.MoneyFund.Name));
+
+            CreateMap<UpdateExpenseTypeRequest, ExpenseType>()
+                .ForMember(d => d.Category, opt => opt.MapFrom(s => Enum.Parse<ExpenseCategoryType>(s.Category)));
         }
     }
 }
