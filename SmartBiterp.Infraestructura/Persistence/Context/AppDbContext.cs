@@ -35,20 +35,47 @@ namespace SmartBiterp.Infrastructure.Persistence.Context
             // Apply all configurations from Configurations folder
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
             base.OnModelCreating(modelBuilder);
-            #region Permission
+            #region ExpenseType
             modelBuilder.Entity<ExpenseType>().HasData(
                 new ExpenseType
                 {
 
                     Id = 1,
-                    Code = "ET001",
+                    Code = "ET0001",
                     Description = "Food & Groceries",
                     Category = ExpenseCategoryType.Other,
                     CreatedAt = StaticCreatedAt,
                     UpdatedAt = null
                 }
             );
-            #endregion Permission
+            #endregion ExpenseType
+            #region MoneyFund
+            modelBuilder.Entity<MoneyFund>().HasData(
+                new MoneyFund
+                {
+                    Id = 1,
+                    Code = "MF0001",
+                    Name = "Main Bank Account",
+                    FundType = MoneyFundType.BankAccount,
+                    InitialBalance = 1000.00m,
+                    CurrentBalance = 1000.00m,
+                    CreatedAt = StaticCreatedAt,
+                    UpdatedAt = null
+                },
+                new MoneyFund
+                {
+                    Id = 2,
+                    Code = "MF0002",
+                    Name = "Office Cash Box",
+                    FundType = MoneyFundType.CashBox,
+                    InitialBalance = 200.00m,
+                    CurrentBalance = 200.00m,
+                    CreatedAt = StaticCreatedAt,
+                    UpdatedAt = null
+                }
+            );
+            #endregion MoneyFund
+
         }
     }
 }
