@@ -30,25 +30,34 @@ namespace SmartBiterp.Infrastructure.Repositories.Expense
             await _context.Budgets.AddAsync(entity);
         }
 
-        public async Task<Budget?> GetBudgetAsync(int expenseTypeId, int month, int year)
+        public async Task<bool> ExistsAsync(int expenseTypeId, int year, int month)
         {
-            return await _context.Budgets
-                .FirstOrDefaultAsync(b =>
-                    b.ExpenseTypeId == expenseTypeId &&
-                    b.Month == month &&
-                    b.Year == year);
+            return await _context.Budgets.AnyAsync(b =>
+                b.ExpenseTypeId == expenseTypeId &&
+                b.Year == year &&
+                b.Month == month
+            );
         }
 
-        public async Task<decimal> GetExecutedAmountAsync(int expenseTypeId, int month, int year)
+        public async Task<Budget?> GetByIdAsync(int id)
         {
-            var start = new DateTime(year, month, 1);
-            var end = start.AddMonths(1).AddDays(-1);
+            return await _context.Budgets
+                .Include(b => b.ExpenseType)
+                .FirstOrDefaultAsync(b => b.Id == id);
+        }
 
-            return await _context.ExpenseDetails
-                .Where(d => d.ExpenseTypeId == expenseTypeId &&
-                            d.ExpenseHeader.Date >= start &&
-                            d.ExpenseHeader.Date <= end)
-                .SumAsync(d => d.Amount);
+        public async Task<IEnumerable<Budget>> GetByMonthAsync(int year, int month)
+        {
+            return await _context.Budgets
+                .Where(b => b.Year == year && b.Month == month)
+                .Include(b => b.ExpenseType)
+                .OrderBy(b => b.ExpenseType.Description)
+                .ToListAsync();
+        }
+
+        public void Remove(Budget entity)
+        {
+            _context.Budgets.Remove(entity);
         }
     }
 }

@@ -4,8 +4,10 @@ namespace SmartBiterp.Domain.Interfaces.Expense
 {
     public interface IBudgetRepository
     {
+        Task<bool> ExistsAsync(int expenseTypeId, int year, int month);
+        Task<IEnumerable<Budget>> GetByMonthAsync(int year, int month);
+        Task<Budget?> GetByIdAsync(int id);
         Task AddAsync(Budget entity);
-        Task<Budget?> GetBudgetAsync(int expenseTypeId, int month, int year);
-        Task<decimal> GetExecutedAmountAsync(int expenseTypeId, int month, int year);
+        void Remove(Budget entity);
     }
 }

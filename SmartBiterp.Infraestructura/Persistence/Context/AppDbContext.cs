@@ -75,6 +75,32 @@ namespace SmartBiterp.Infrastructure.Persistence.Context
                 }
             );
             #endregion MoneyFund
+            #region Budget
+            modelBuilder.Entity<Budget>().HasData(
+                new Budget
+                {
+                    Id = 1,
+                    ExpenseTypeId = 1,
+                    Year = 2025,
+                    Month = 2,
+                    AllocatedAmount = 350.00m,
+                    Status = BudgetStatusType.Normal,
+                    CreatedAt = StaticCreatedAt,
+                    UpdatedAt = null
+                },
+                new Budget
+                {
+                    Id = 2,
+                    ExpenseTypeId = 1,
+                    Year = 2025,
+                    Month = 3,
+                    AllocatedAmount = 400.00m,
+                    Status = BudgetStatusType.Normal,
+                    CreatedAt = StaticCreatedAt,
+                    UpdatedAt = null
+                }
+            );
+            #endregion Budget
 
         }
     }
