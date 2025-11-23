@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SmartBiterp.Domain\SmartBiterp.Domain.csproj" />
+    <ProjectReference Include="..\SmartBiterp.Shared\SmartBiterp.Shared.csproj" />
   </ItemGroup>
 
 </Project>

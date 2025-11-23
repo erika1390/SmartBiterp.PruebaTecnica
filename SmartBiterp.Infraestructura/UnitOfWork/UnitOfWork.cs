@@ -1,4 +1,6 @@
-﻿using SmartBiterp.Domain.Interfaces;
+﻿using Microsoft.EntityFrameworkCore.Storage;
+
+using SmartBiterp.Domain.Interfaces;
 using SmartBiterp.Domain.Interfaces.Expense;
 using SmartBiterp.Domain.Interfaces.Security;
 using SmartBiterp.Domain.Interfaces.System;
@@ -49,6 +51,11 @@ namespace SmartBiterp.Infrastructure.UnitOfWork
         public IMenuRoleRepository MenuRoles { get; }
 
         public IAuditLogRepository AuditLogs { get; }
+
+        public async Task<IDbContextTransaction> BeginTransactionAsync()
+        {
+            return await _context.Database.BeginTransactionAsync();
+        }
 
         public void Dispose()
         {

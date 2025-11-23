@@ -9,5 +9,6 @@ namespace SmartBiterp.Domain.Interfaces.Expense
         Task<Budget?> GetByIdAsync(int id);
         Task AddAsync(Budget entity);
         void Remove(Budget entity);
+        Task<Budget?> GetByMonthAndTypeAsync(int year, int month, int expenseTypeId);
     }
 }

@@ -59,5 +59,16 @@ namespace SmartBiterp.Infrastructure.Repositories.Expense
         {
             _context.Budgets.Remove(entity);
         }
+
+        public async Task<Budget?> GetByMonthAndTypeAsync(int year, int month, int expenseTypeId)
+        {
+            return await _context.Budgets
+                .FirstOrDefaultAsync(b =>
+                    b.Year == year &&
+                    b.Month == month &&
+                    b.ExpenseTypeId == expenseTypeId
+                );
+        }
+
     }
 }
