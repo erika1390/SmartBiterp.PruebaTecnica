@@ -11,8 +11,12 @@ namespace SmartBiterp.Infrastructure.Persistence.Configurations.Expense
         {
             builder.ToTable("ExpenseDetails");
 
-            builder.Property(e => e.Amount)
-                   .HasColumnType("decimal(18,2)");
+            builder.Property(d => d.Amount)
+                .HasColumnType("decimal(18,2)");
+
+            builder.HasOne(d => d.ExpenseType)
+                .WithMany(t => t.ExpenseDetails)
+                .HasForeignKey(d => d.ExpenseTypeId);
         }
     }
 }

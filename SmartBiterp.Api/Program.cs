@@ -61,6 +61,7 @@ builder.Services.AddAutoMapper(cfg =>
 builder.Services.AddScoped<IExpenseTypeService, ExpenseTypeService>();
 builder.Services.AddScoped<IMoneyFundService, MoneyFundService>();
 builder.Services.AddScoped<IBudgetService, BudgetService>();
+builder.Services.AddScoped<IExpenseService, ExpenseService>();
 
 // Expense Repositories
 builder.Services.AddScoped<IExpenseTypeRepository, ExpenseTypeRepository>();

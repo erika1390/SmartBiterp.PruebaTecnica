@@ -4,8 +4,11 @@ namespace SmartBiterp.Domain.Interfaces.Expense
 {
     public interface IExpenseRepository
     {
-        Task AddExpenseAsync(ExpenseHeader header, IEnumerable<ExpenseDetail> details);
+        Task AddHeaderAsync(ExpenseHeader header);
+        Task AddDetailAsync(ExpenseDetail detail);
+        Task<ExpenseHeader?> GetByIdAsync(int id);
         Task<IEnumerable<ExpenseHeader>> GetExpensesByDateRangeAsync(DateTime start, DateTime end);
-        Task<decimal> GetTotalByTypeAsync(int expenseTypeId, int month, int year);
+        Task<decimal> GetTotalSpentAsync(int year, int month, int expenseTypeId);
+        void RemoveHeader(ExpenseHeader header);
     }
 }

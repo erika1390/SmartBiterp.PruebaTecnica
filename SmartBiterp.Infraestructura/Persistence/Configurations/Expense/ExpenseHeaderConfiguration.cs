@@ -12,16 +12,25 @@ namespace SmartBiterp.Infrastructure.Persistence.Configurations.Expense
             builder.ToTable("ExpenseHeaders");
 
             builder.Property(e => e.StoreName)
-                   .HasMaxLength(200)
-                   .IsRequired();
+                .IsRequired()
+                .HasMaxLength(150);
 
             builder.Property(e => e.DocumentType)
-                   .HasConversion<string>()
-                   .IsRequired();
+                .IsRequired()
+                .HasMaxLength(50);
+
+            builder.HasOne(e => e.MoneyFund)
+                .WithMany(f => f.ExpenseHeaders)
+                .HasForeignKey(e => e.MoneyFundId);
 
             builder.HasMany(e => e.Details)
-                   .WithOne(d => d.ExpenseHeader)
-                   .HasForeignKey(d => d.ExpenseHeaderId);
+                .WithOne(d => d.ExpenseHeader)
+                .HasForeignKey(d => d.ExpenseHeaderId);
+
+            builder.HasMany(h => h.Details)
+               .WithOne(d => d.ExpenseHeader)
+               .HasForeignKey(d => d.ExpenseHeaderId)
+               .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

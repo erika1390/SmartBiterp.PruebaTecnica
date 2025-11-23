@@ -15,25 +15,21 @@ namespace SmartBiterp.Infrastructure.Repositories.Expense
             _context = context;
         }
 
-        public async Task AddExpenseAsync(ExpenseHeader header, IEnumerable<ExpenseDetail> details)
+        public async Task AddHeaderAsync(ExpenseHeader header)
         {
-            using var trx = await _context.Database.BeginTransactionAsync();
+            await _context.ExpenseHeaders.AddAsync(header);
+        }
 
-            try
-            {
-                await _context.ExpenseHeaders.AddAsync(header);
+        public async Task AddDetailAsync(ExpenseDetail detail)
+        {
+            await _context.ExpenseDetails.AddAsync(detail);
+        }
 
-                foreach (var d in details)
-                    await _context.ExpenseDetails.AddAsync(d);
-
-                await _context.SaveChangesAsync();
-                await trx.CommitAsync();
-            }
-            catch
-            {
-                await trx.RollbackAsync();
-                throw;
-            }
+        public async Task<ExpenseHeader?> GetByIdAsync(int id)
+        {
+            return await _context.ExpenseHeaders
+                .Include(h => h.Details)
+                .FirstOrDefaultAsync(h => h.Id == id);
         }
 
         public async Task<IEnumerable<ExpenseHeader>> GetExpensesByDateRangeAsync(DateTime start, DateTime end)
@@ -44,16 +40,28 @@ namespace SmartBiterp.Infrastructure.Repositories.Expense
                 .ToListAsync();
         }
 
-        public async Task<decimal> GetTotalByTypeAsync(int expenseTypeId, int month, int year)
+        public async Task<decimal> GetTotalSpentAsync(int year, int month, int expenseTypeId)
         {
             var start = new DateTime(year, month, 1);
             var end = start.AddMonths(1).AddDays(-1);
 
             return await _context.ExpenseDetails
-                .Where(d => d.ExpenseTypeId == expenseTypeId &&
-                            d.ExpenseHeader.Date >= start &&
-                            d.ExpenseHeader.Date <= end)
+                .Where(d =>
+                    d.ExpenseTypeId == expenseTypeId &&
+                    d.ExpenseHeader.Date >= start &&
+                    d.ExpenseHeader.Date <= end
+                )
                 .SumAsync(d => d.Amount);
+        }
+
+        public void RemoveHeader(ExpenseHeader header)
+        {
+            _context.ExpenseHeaders.Remove(header);
+        }
+
+        public void RemoveDetail(ExpenseDetail detail)
+        {
+            _context.ExpenseDetails.Remove(detail);
         }
     }
 }

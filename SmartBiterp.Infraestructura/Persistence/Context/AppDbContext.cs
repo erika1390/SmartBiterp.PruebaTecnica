@@ -101,7 +101,63 @@ namespace SmartBiterp.Infrastructure.Persistence.Context
                 }
             );
             #endregion Budget
-
+            #region ExpenseHeader
+            modelBuilder.Entity<ExpenseHeader>().HasData(
+                new ExpenseHeader
+                {
+                    Id = 1,
+                    Date = new DateTime(2025, 1, 15),
+                    MoneyFundId = 1,
+                    StoreName = "SuperMarket La Economía",
+                    DocumentType = DocumentType.Other,
+                    Notes = "Compra mensual",
+                    CreatedAt = StaticCreatedAt,
+                    UpdatedAt = null
+                },
+                new ExpenseHeader
+                {
+                    Id = 2,
+                    Date = new DateTime(2025, 1, 18),
+                    MoneyFundId = 1,
+                    StoreName = "Papelería Central",
+                    DocumentType = DocumentType.Other,
+                    Notes = "Útiles escolares",
+                    CreatedAt = StaticCreatedAt,
+                    UpdatedAt = null
+                }
+            );
+            #endregion ExpenseHeader
+            #region ExpenseDetail
+            modelBuilder.Entity<ExpenseDetail>().HasData(
+                new ExpenseDetail
+                {
+                    Id = 1,
+                    ExpenseHeaderId = 1,
+                    ExpenseTypeId = 1, // Food
+                    Amount = 150.75m,
+                    CreatedAt = StaticCreatedAt,
+                    UpdatedAt = null
+                },
+                new ExpenseDetail
+                {
+                    Id = 2,
+                    ExpenseHeaderId = 1,
+                    ExpenseTypeId = 2, // Utilities
+                    Amount = 80.50m,
+                    CreatedAt = StaticCreatedAt,
+                    UpdatedAt = null
+                },
+                new ExpenseDetail
+                {
+                    Id = 3,
+                    ExpenseHeaderId = 2,
+                    ExpenseTypeId = 2, // Office Supplies
+                    Amount = 45.00m,
+                    CreatedAt = StaticCreatedAt,
+                    UpdatedAt = null
+                }
+            );
+            #endregion ExpenseDetail
         }
     }
 }

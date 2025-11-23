@@ -11,5 +11,13 @@
 
         public static ApiResponse<T> Fail(string message)
             => new ApiResponse<T> { Success = false, Message = message };
+
+        public static ApiResponse<T> Fail(string message, T data)
+            => new ApiResponse<T>
+            {
+                Success = false,
+                Message = message,
+                Data = data
+            };
     }
 }
