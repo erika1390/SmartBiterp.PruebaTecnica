@@ -17,9 +17,6 @@ namespace SmartBiterp.Api.Controllers.Expense
             _service = service;
         }
 
-        /// <summary>
-        /// Crear gasto con encabezado y detalle.
-        /// </summary>
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateExpenseHeaderRequest request)
         {
@@ -34,9 +31,6 @@ namespace SmartBiterp.Api.Controllers.Expense
             return Ok(response);
         }
 
-        /// <summary>
-        /// Obtener todos los gastos.
-        /// </summary>
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -44,9 +38,6 @@ namespace SmartBiterp.Api.Controllers.Expense
             return Ok(response);
         }
 
-        /// <summary>
-        /// Obtener un gasto por ID.
-        /// </summary>
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -58,9 +49,6 @@ namespace SmartBiterp.Api.Controllers.Expense
             return Ok(response);
         }
 
-        /// <summary>
-        /// Eliminar gasto por ID.
-        /// </summary>
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
