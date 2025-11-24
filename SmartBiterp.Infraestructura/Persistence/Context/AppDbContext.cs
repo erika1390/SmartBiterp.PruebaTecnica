@@ -158,6 +158,37 @@ namespace SmartBiterp.Infrastructure.Persistence.Context
                 }
             );
             #endregion ExpenseDetail
+            #region Deposit
+            modelBuilder.Entity<Deposit>().HasData(
+                new Deposit
+                {
+                    Id = 1,
+                    Date = new DateTime(2025, 02, 10),
+                    MoneyFundId = 1,               // Debe existir en MoneyFunds
+                    Amount = 150.00m,
+                    CreatedAt = StaticCreatedAt,
+                    UpdatedAt = null
+                },
+                new Deposit
+                {
+                    Id = 2,
+                    Date = new DateTime(2025, 02, 15),
+                    MoneyFundId = 1,
+                    Amount = 80.00m,
+                    CreatedAt = StaticCreatedAt,
+                    UpdatedAt = null
+                },
+                new Deposit
+                {
+                    Id = 3,
+                    Date = new DateTime(2025, 03, 01),
+                    MoneyFundId = 3,
+                    Amount = 200.00m,
+                    CreatedAt = StaticCreatedAt,
+                    UpdatedAt = null
+                }
+            );
+            #endregion Deposit
         }
     }
 }
