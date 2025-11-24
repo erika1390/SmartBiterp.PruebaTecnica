@@ -18,10 +18,11 @@ namespace SmartBiterp.Application.Services.Expense
             _uow = uow;
             _mapper = mapper;
         }
+
         public async Task<ApiResponse<int>> CreateAsync(CreateDepositRequest request)
         {
             if (request.Amount <= 0)
-                return ApiResponse<int>.Fail("El monto del depósito debe ser mayor a cero.");
+                return ApiResponse<int>.Fail("The deposit amount must be greater than zero.");
 
             var entity = new Deposit
             {
@@ -33,7 +34,7 @@ namespace SmartBiterp.Application.Services.Expense
             await _uow.Deposits.AddAsync(entity);
             await _uow.SaveChangesAsync();
 
-            return ApiResponse<int>.Ok(entity.Id, "Depósito registrado correctamente.");
+            return ApiResponse<int>.Ok(entity.Id, "Deposit successfully recorded.");
         }
 
         public async Task<ApiResponse<IEnumerable<DepositDto>>> GetByDateRangeAsync(DateTime start, DateTime end)

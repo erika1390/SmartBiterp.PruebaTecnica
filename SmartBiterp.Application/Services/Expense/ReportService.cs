@@ -17,14 +17,14 @@ namespace SmartBiterp.Application.Services.Expense
         {
             var data = await _uow.Reports.GetBudgetVsExecutionAsync(start, end);
 
-            return ApiResponse<IEnumerable<object>>.Ok(data, "Reporte generado correctamente.");
+            return ApiResponse<IEnumerable<object>>.Ok(data, "Report generated successfully.");
         }
 
         public async Task<ApiResponse<IEnumerable<object>>> GetMovementsAsync(DateTime start, DateTime end)
         {
             var data = await _uow.Reports.GetMovementsAsync(start, end);
 
-            return ApiResponse<IEnumerable<object>>.Ok(data, "Reporte generado correctamente.");
+            return ApiResponse<IEnumerable<object>>.Ok(data, "Report generated successfully.");
         }
     }
 }

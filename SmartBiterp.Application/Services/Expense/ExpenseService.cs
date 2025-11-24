@@ -18,11 +18,11 @@ namespace SmartBiterp.Application.Services.Expense
             _uow = uow;
             _mapper = mapper;
         }
-        
+
         public async Task<ApiResponse<object>> CreateAsync(CreateExpenseHeaderRequest request)
         {
             if (request.Details == null || !request.Details.Any())
-                return ApiResponse<object>.Fail("Debe registrar al menos un detalle.");
+                return ApiResponse<object>.Fail("At least one expense detail must be provided.");
 
             using var trx = await _uow.BeginTransactionAsync();
 
@@ -53,7 +53,7 @@ namespace SmartBiterp.Application.Services.Expense
                     {
                         await trx.RollbackAsync();
                         return ApiResponse<object>.Fail(
-                            $"No existe presupuesto para el tipo de gasto {det.ExpenseTypeId} en {request.Date.Month}/{request.Date.Year}."
+                            $"No budget exists for expense type {det.ExpenseTypeId} in {request.Date.Month}/{request.Date.Year}."
                         );
                     }
 
@@ -70,9 +70,9 @@ namespace SmartBiterp.Application.Services.Expense
                         exceeded.Add(new
                         {
                             ExpenseTypeId = det.ExpenseTypeId,
-                            Presupuesto = budget.AllocatedAmount,
-                            Gastado = spent,
-                            GastoNuevo = det.Amount,
+                            Budget = budget.AllocatedAmount,
+                            Spent = spent,
+                            NewExpense = det.Amount,
                             Total = newTotal
                         });
                     }
@@ -88,18 +88,18 @@ namespace SmartBiterp.Application.Services.Expense
                 if (exceeded.Any())
                 {
                     await trx.RollbackAsync();
-                    return ApiResponse<object>.Fail("Presupuesto sobregirado.", exceeded);
+                    return ApiResponse<object>.Fail("Budget exceeded.", exceeded);
                 }
 
                 await _uow.SaveChangesAsync();
                 await trx.CommitAsync();
 
-                return ApiResponse<object>.Ok(new { id = header.Id }, "Gasto registrado correctamente.");
+                return ApiResponse<object>.Ok(new { id = header.Id }, "Expense successfully recorded.");
             }
             catch (Exception ex)
             {
                 await trx.RollbackAsync();
-                return ApiResponse<object>.Fail($"Error registrando gasto: {ex.Message}");
+                return ApiResponse<object>.Fail($"Error while recording expense: {ex.Message}");
             }
         }
 
@@ -119,7 +119,7 @@ namespace SmartBiterp.Application.Services.Expense
             var entity = await _uow.Expenses.GetByIdAsync(id);
 
             if (entity == null)
-                return ApiResponse<ExpenseHeaderDto?>.Fail("Gasto no encontrado.");
+                return ApiResponse<ExpenseHeaderDto?>.Fail("Expense not found.");
 
             var mapped = _mapper.Map<ExpenseHeaderDto>(entity);
             return ApiResponse<ExpenseHeaderDto?>.Ok(mapped);
@@ -130,13 +130,13 @@ namespace SmartBiterp.Application.Services.Expense
             var header = await _uow.Expenses.GetByIdAsync(id);
 
             if (header == null)
-                return ApiResponse<string>.Fail("Gasto no encontrado.");
+                return ApiResponse<string>.Fail("Expense not found.");
 
             _uow.Expenses.RemoveHeader(header);
 
             await _uow.SaveChangesAsync();
 
-            return ApiResponse<string>.Ok("Gasto eliminado correctamente.");
+            return ApiResponse<string>.Ok("Expense successfully deleted.");
         }
     }
 }
