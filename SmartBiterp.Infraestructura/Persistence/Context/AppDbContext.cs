@@ -206,7 +206,7 @@ namespace SmartBiterp.Infrastructure.Persistence.Context
                 {
                     Id = 2,
                     Title = "Tipos de Gasto",
-                    Route = "/expense-types",
+                    Route = "/mantenimientos/expense-types",
                     Icon = "list",
                     ParentId = 1,
                     CreatedAt = StaticCreatedAt,
@@ -216,7 +216,7 @@ namespace SmartBiterp.Infrastructure.Persistence.Context
                 {
                     Id = 3,
                     Title = "Fondo Monetario",
-                    Route = "/money-funds",
+                    Route = "/mantenimientos/money-funds",
                     Icon = "wallet",
                     ParentId = 1,
                     CreatedAt = StaticCreatedAt,
@@ -236,7 +236,7 @@ namespace SmartBiterp.Infrastructure.Persistence.Context
                 {
                     Id = 5,
                     Title = "Presupuesto por tipo de gasto",
-                    Route = "/budgets",
+                    Route = "/movimientos/budgets",
                     Icon = "money-check",
                     ParentId = 4,
                     CreatedAt = StaticCreatedAt,
@@ -246,7 +246,7 @@ namespace SmartBiterp.Infrastructure.Persistence.Context
                 {
                     Id = 6,
                     Title = "Registros de gastos",
-                    Route = "/expenses",
+                    Route = "/movimientos/expenses",
                     Icon = "file-invoice-dollar",
                     ParentId = 4,
                     CreatedAt = StaticCreatedAt,
@@ -256,7 +256,7 @@ namespace SmartBiterp.Infrastructure.Persistence.Context
                 {
                     Id = 7,
                     Title = "Depósitos",
-                    Route = "/deposits",
+                    Route = "/movimientos/deposits",
                     Icon = "money-bill-transfer",
                     ParentId = 4,
                     CreatedAt = StaticCreatedAt,
@@ -276,7 +276,7 @@ namespace SmartBiterp.Infrastructure.Persistence.Context
                 {
                     Id = 9,
                     Title = "Consulta de movimientos",
-                    Route = "/movements",
+                    Route = "/reportes/movement-query",
                     Icon = "magnifying-glass-chart",
                     ParentId = 8,
                     CreatedAt = StaticCreatedAt,
@@ -286,7 +286,7 @@ namespace SmartBiterp.Infrastructure.Persistence.Context
                 {
                     Id = 10,
                     Title = "Gráfico Comparativo de Presupuesto y Ejecución",
-                    Route = "/reports/budget-vs-execution",
+                    Route = "/reportes/budget-vs-execution",
                     Icon = "chart-line",
                     ParentId = 8,
                     CreatedAt = StaticCreatedAt,

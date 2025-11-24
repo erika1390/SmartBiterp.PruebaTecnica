@@ -22,7 +22,13 @@ namespace SmartBiterp.Application.Mapping
                 .ForMember(d => d.PermissionCode, opt => opt.MapFrom(s => s.Permission.Code))
                 .ForMember(d => d.PermissionDescription, opt => opt.MapFrom(s => s.Permission.Description));
 
-            CreateMap<Menu, MenuDto>();
+            CreateMap<Menu, MenuDto>()
+                .ForMember(d => d.Children, opt => opt.MapFrom(s => s.Children))
+                .ForMember(d => d.ParentId, opt => opt.MapFrom(s => s.ParentId))
+                .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
+                .ForMember(d => d.Title, opt => opt.MapFrom(s => s.Title))
+                .ForMember(d => d.Icon, opt => opt.MapFrom(s => s.Icon))
+                .ForMember(d => d.Route, opt => opt.MapFrom(s => s.Route));
 
             CreateMap<MenuRole, MenuRoleDto>()
                 .ForMember(d => d.RoleName, opt => opt.MapFrom(s => s.Role.RoleType.ToString()))

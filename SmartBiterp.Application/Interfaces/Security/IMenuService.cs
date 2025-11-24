@@ -1,11 +1,11 @@
-﻿using SmartBiterp.Domain.Entities.Security;
+﻿using SmartBiterp.Application.DTOs.Security;
 
 namespace SmartBiterp.Application.Interfaces.Security
 {
     public interface IMenuService
     {
-        Task<IEnumerable<Menu>> GetAllAsync();
-        Task<Menu?> GetByIdAsync(int id);
-        Task<Menu> CreateAsync(Menu menu);
+        Task<IEnumerable<MenuDto>> GetAllAsync();
+        Task<MenuDto?> GetByIdAsync(int id);
+        Task<MenuDto> CreateAsync(MenuDto dto);
     }
 }
