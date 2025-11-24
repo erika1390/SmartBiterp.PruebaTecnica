@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
 
 using SmartBiterp.Application.Interfaces.Expense;
+using SmartBiterp.Application.Interfaces.Security;
 using SmartBiterp.Application.Mapping;
 using SmartBiterp.Application.Services.Expense;
-
+using SmartBiterp.Application.Services.Security;
 using SmartBiterp.Domain.Interfaces;
 using SmartBiterp.Domain.Interfaces.Expense;
 using SmartBiterp.Domain.Interfaces.Security;
@@ -64,6 +64,13 @@ builder.Services.AddScoped<IBudgetService, BudgetService>();
 builder.Services.AddScoped<IExpenseService, ExpenseService>();
 builder.Services.AddScoped<IDepositService, DepositService>();
 builder.Services.AddScoped<IReportService, ReportService>();
+
+builder.Services.AddScoped<IMenuRoleService, MenuRoleService>();
+builder.Services.AddScoped<IMenuService, MenuService>();
+builder.Services.AddScoped<IPermissionService, PermissionService>();
+builder.Services.AddScoped<IRolePermissionService, RolePermissionService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 // Expense Repositories
 builder.Services.AddScoped<IExpenseTypeRepository, ExpenseTypeRepository>();

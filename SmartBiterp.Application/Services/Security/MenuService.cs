@@ -31,7 +31,7 @@ namespace SmartBiterp.Application.Services.Security
 
         public async Task<Menu> CreateAsync(Menu menu)
         {
-            _logger.LogInformation("Creating new menu: {Name}", menu.Name);
+            _logger.LogInformation("Creating new menu: {Name}", menu.Title);
             await _repository.AddAsync(menu);
             return menu;
         }
