@@ -63,6 +63,7 @@ builder.Services.AddScoped<IMoneyFundService, MoneyFundService>();
 builder.Services.AddScoped<IBudgetService, BudgetService>();
 builder.Services.AddScoped<IExpenseService, ExpenseService>();
 builder.Services.AddScoped<IDepositService, DepositService>();
+builder.Services.AddScoped<IReportService, ReportService>();
 
 // Expense Repositories
 builder.Services.AddScoped<IExpenseTypeRepository, ExpenseTypeRepository>();
