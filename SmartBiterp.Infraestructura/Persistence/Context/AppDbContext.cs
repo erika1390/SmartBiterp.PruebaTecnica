@@ -189,6 +189,313 @@ namespace SmartBiterp.Infrastructure.Persistence.Context
                 }
             );
             #endregion Deposit
+            #region Menu
+
+            modelBuilder.Entity<Menu>().HasData(
+                new Menu
+                {
+                    Id = 1,
+                    Title = "Mantenimientos",
+                    Route = "",
+                    Icon = "folder",
+                    ParentId = null,
+                    CreatedAt = StaticCreatedAt,
+                    UpdatedAt = null
+                },
+                new Menu
+                {
+                    Id = 2,
+                    Title = "Tipos de Gasto",
+                    Route = "/expense-types",
+                    Icon = "list",
+                    ParentId = 1,
+                    CreatedAt = StaticCreatedAt,
+                    UpdatedAt = null
+                },
+                new Menu
+                {
+                    Id = 3,
+                    Title = "Fondo Monetario",
+                    Route = "/money-funds",
+                    Icon = "wallet",
+                    ParentId = 1,
+                    CreatedAt = StaticCreatedAt,
+                    UpdatedAt = null
+                },
+                new Menu
+                {
+                    Id = 4,
+                    Title = "Movimientos",
+                    Route = "",
+                    Icon = "arrows-spin",
+                    ParentId = null,
+                    CreatedAt = StaticCreatedAt,
+                    UpdatedAt = null
+                },
+                new Menu
+                {
+                    Id = 5,
+                    Title = "Presupuesto por tipo de gasto",
+                    Route = "/budgets",
+                    Icon = "money-check",
+                    ParentId = 4,
+                    CreatedAt = StaticCreatedAt,
+                    UpdatedAt = null
+                },
+                new Menu
+                {
+                    Id = 6,
+                    Title = "Registros de gastos",
+                    Route = "/expenses",
+                    Icon = "file-invoice-dollar",
+                    ParentId = 4,
+                    CreatedAt = StaticCreatedAt,
+                    UpdatedAt = null
+                },
+                new Menu
+                {
+                    Id = 7,
+                    Title = "Depósitos",
+                    Route = "/deposits",
+                    Icon = "money-bill-transfer",
+                    ParentId = 4,
+                    CreatedAt = StaticCreatedAt,
+                    UpdatedAt = null
+                },
+                new Menu
+                {
+                    Id = 8,
+                    Title = "Consultas y Reportes",
+                    Route = "",
+                    Icon = "chart-bar",
+                    ParentId = null,
+                    CreatedAt = StaticCreatedAt,
+                    UpdatedAt = null
+                },
+                new Menu
+                {
+                    Id = 9,
+                    Title = "Consulta de movimientos",
+                    Route = "/movements",
+                    Icon = "magnifying-glass-chart",
+                    ParentId = 8,
+                    CreatedAt = StaticCreatedAt,
+                    UpdatedAt = null
+                },
+                new Menu
+                {
+                    Id = 10,
+                    Title = "Gráfico Comparativo de Presupuesto y Ejecución",
+                    Route = "/reports/budget-vs-execution",
+                    Icon = "chart-line",
+                    ParentId = 8,
+                    CreatedAt = StaticCreatedAt,
+                    UpdatedAt = null
+                }
+            );
+            #endregion
+            #region Role
+            modelBuilder.Entity<Role>().HasData(
+                new Role
+                {
+                    Id = 1,
+                    RoleType = RoleType.Administrator,
+                    CreatedAt = StaticCreatedAt,
+                    UpdatedAt = null
+                },
+                new Role
+                {
+                    Id = 2,
+                    RoleType = RoleType.Manager,
+                    CreatedAt = StaticCreatedAt,
+                    UpdatedAt = null
+                },
+                new Role
+                {
+                    Id = 3,
+                    RoleType = RoleType.Accountant,
+                    CreatedAt = StaticCreatedAt,
+                    UpdatedAt = null
+                },
+                new Role
+                {
+                    Id = 4,
+                    RoleType = RoleType.Operator,
+                    CreatedAt = StaticCreatedAt,
+                    UpdatedAt = null
+                },
+                new Role
+                {
+                    Id = 5,
+                    RoleType = RoleType.Viewer,
+                    CreatedAt = StaticCreatedAt,
+                    UpdatedAt = null
+                }
+            );
+            #endregion
+            #region Permission
+            modelBuilder.Entity<Permission>().HasData(
+                new Permission
+                {
+                    Id = 1,
+                    Code = "VIEW_EXPENSE_TYPES",
+                    Description = "Allows viewing of expense types",
+                    CreatedAt = StaticCreatedAt
+                },
+                new Permission
+                {
+                    Id = 2,
+                    Code = "MANAGE_EXPENSE_TYPES",
+                    Description = "Allows creating, updating and deleting expense types",
+                    CreatedAt = StaticCreatedAt
+                },
+
+                new Permission
+                {
+                    Id = 3,
+                    Code = "VIEW_MONEY_FUNDS",
+                    Description = "Allows viewing of money funds",
+                    CreatedAt = StaticCreatedAt
+                },
+                new Permission
+                {
+                    Id = 4,
+                    Code = "MANAGE_MONEY_FUNDS",
+                    Description = "Allows creating, updating and deleting money funds",
+                    CreatedAt = StaticCreatedAt
+                },
+                new Permission
+                {
+                    Id = 5,
+                    Code = "VIEW_BUDGETS",
+                    Description = "Allows viewing of budgets by expense type",
+                    CreatedAt = StaticCreatedAt
+                },
+                new Permission
+                {
+                    Id = 6,
+                    Code = "MANAGE_BUDGETS",
+                    Description = "Allows creating, updating and deleting budgets",
+                    CreatedAt = StaticCreatedAt
+                },
+
+                new Permission
+                {
+                    Id = 7,
+                    Code = "VIEW_EXPENSES",
+                    Description = "Allows viewing of expense records",
+                    CreatedAt = StaticCreatedAt
+                },
+                new Permission
+                {
+                    Id = 8,
+                    Code = "MANAGE_EXPENSES",
+                    Description = "Allows creating, updating and deleting expenses",
+                    CreatedAt = StaticCreatedAt
+                },
+
+                new Permission
+                {
+                    Id = 9,
+                    Code = "VIEW_DEPOSITS",
+                    Description = "Allows viewing of deposit records",
+                    CreatedAt = StaticCreatedAt
+                },
+                new Permission
+                {
+                    Id = 10,
+                    Code = "MANAGE_DEPOSITS",
+                    Description = "Allows creating, updating and deleting deposits",
+                    CreatedAt = StaticCreatedAt
+                },
+                new Permission
+                {
+                    Id = 11,
+                    Code = "VIEW_MOVEMENT_REPORT",
+                    Description = "Allows consulting movement reports",
+                    CreatedAt = StaticCreatedAt
+                },
+
+                new Permission
+                {
+                    Id = 12,
+                    Code = "VIEW_BUDGET_EXECUTION_CHART",
+                    Description = "Allows viewing the budget vs execution comparative chart",
+                    CreatedAt = StaticCreatedAt
+                }
+            );
+            #endregion
+            #region User
+            modelBuilder.Entity<User>().HasData(
+                new User
+                {
+                    Id = 1,
+                    Username = "admin",
+                    Email = "admin@system.com",
+                    RoleId = 1,
+                    CreatedAt = StaticCreatedAt,
+                    UpdatedAt = null
+                }
+            );
+            #endregion
+            #region MenuRole
+            modelBuilder.Entity<MenuRole>().HasData(
+                new MenuRole { Id = 1, MenuId = 1, RoleId = 1, CreatedAt = StaticCreatedAt },
+                new MenuRole { Id = 2, MenuId = 2, RoleId = 1, CreatedAt = StaticCreatedAt },
+                new MenuRole { Id = 3, MenuId = 3, RoleId = 1, CreatedAt = StaticCreatedAt },
+                new MenuRole { Id = 4, MenuId = 4, RoleId = 1, CreatedAt = StaticCreatedAt },
+                new MenuRole { Id = 5, MenuId = 5, RoleId = 1, CreatedAt = StaticCreatedAt }
+            );
+            #endregion
+            #region RolePermission
+            modelBuilder.Entity<RolePermission>().HasData(
+                new RolePermission
+                {
+                    Id = 1,
+                    RoleId = 1,
+                    PermissionId = 1,
+                    AssignedAt = StaticCreatedAt,
+                    AssignedBy = "system",
+                    CreatedAt = StaticCreatedAt
+                },
+                new RolePermission
+                {
+                    Id = 2,
+                    RoleId = 1,
+                    PermissionId = 2,
+                    AssignedAt = StaticCreatedAt,
+                    AssignedBy = "system",
+                    CreatedAt = StaticCreatedAt
+                },
+                new RolePermission
+                {
+                    Id = 3,
+                    RoleId = 1,
+                    PermissionId = 3,
+                    AssignedAt = StaticCreatedAt,
+                    AssignedBy = "system",
+                    CreatedAt = StaticCreatedAt
+                },
+                new RolePermission
+                {
+                    Id = 4,
+                    RoleId = 1,
+                    PermissionId = 4,
+                    AssignedAt = StaticCreatedAt,
+                    AssignedBy = "system",
+                    CreatedAt = StaticCreatedAt
+                },
+                new RolePermission
+                {
+                    Id = 5,
+                    RoleId = 1,
+                    PermissionId = 5,
+                    AssignedAt = StaticCreatedAt,
+                    AssignedBy = "system",
+                    CreatedAt = StaticCreatedAt
+                }
+            );
+            #endregion
         }
     }
 }
