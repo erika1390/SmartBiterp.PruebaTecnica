@@ -94,13 +94,6 @@ builder.Services.AddScoped<IAuditLogRepository, AuditLogRepository>();
 // UoW
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-builder.Services
-    .AddControllers()
-    .AddJsonOptions(opt =>
-    {
-        opt.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
-        opt.JsonSerializerOptions.WriteIndented = true;
-    });
 
 
 var app = builder.Build();
