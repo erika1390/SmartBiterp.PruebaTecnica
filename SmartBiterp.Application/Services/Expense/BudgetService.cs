@@ -20,7 +20,6 @@ namespace SmartBiterp.Application.Services.Expense
         }
         public async Task<int> CreateAsync(CreateBudgetRequest request)
         {
-            // Garantizar que no existan presupuestos duplicados
             var exists = await _uow.Budgets.ExistsAsync(
                 request.ExpenseTypeId,
                 request.Year,
